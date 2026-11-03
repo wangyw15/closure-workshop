@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
+    "@closure-workshop/spine-player": "file:./third_party/spine-player",
     "@remixicon/react": "^4.9.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.2",

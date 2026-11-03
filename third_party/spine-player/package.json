@@ -1,0 +1,14 @@
+{
+  "name": "@closure-workshop/spine-player",
+  "version": "3.8",
+  "private": true,
+  "description": "Vendored Spine Player 3.8 browser distribution.",
+  "main": "./build/spine-player.js",
+  "types": "./build/spine-player.d.ts",
+  "files": [
+    "build/spine-player.js",
+    "build/spine-player.js.map",
+    "build/spine-player.d.ts"
+  ],
+  "sideEffects": true
+}
