@@ -13,6 +13,7 @@ interface CharacterPageProps {
   searchParams: Promise<{
     skin?: string | string[]
     model?: string | string[]
+    control?: string | string[]
   }>
 }
 
@@ -27,6 +28,7 @@ export default async function CharacterPage({
   const [{ char_id: charId }, query] = await Promise.all([params, searchParams])
   const skinName = getSearchParam(query.skin) || "默认"
   const modelName = getSearchParam(query.model) || "正面"
+  const showControls = getSearchParam(query.control) === "true"
   const metadataUrl = `https://torappu.prts.wiki/assets/char_spine/${encodeURIComponent(charId)}/meta.json`
   const response = await fetch(metadataUrl, {
     headers: { Accept: "application/json" },
@@ -51,7 +53,7 @@ export default async function CharacterPage({
   const config = {
     skelUrl: `${resourceUrl}.skel`,
     atlasUrl: `${resourceUrl}.atlas`,
-    showControls: true,
+    showControls,
   }
 
   return (
@@ -59,11 +61,20 @@ export default async function CharacterPage({
       <h1 className="sr-only">
         {metadata.name} - {skinName} - {modelName}
       </h1>
-      <SpinePlayer
-        config={config}
-        className="h-full w-full"
-        aria-label={`${metadata.name} ${skinName} ${modelName}`}
-      />
+      {/* 默认隐藏控制栏且屏蔽鼠标事件:画布点击会切换暂停,需一并拦截 */}
+      <div
+        className={
+          showControls
+            ? "h-full w-full"
+            : "pointer-events-none h-full w-full"
+        }
+      >
+        <SpinePlayer
+          config={config}
+          className="h-full w-full"
+          aria-label={`${metadata.name} ${skinName} ${modelName}`}
+        />
+      </div>
     </main>
   )
 }
